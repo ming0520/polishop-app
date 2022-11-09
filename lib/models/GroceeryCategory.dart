@@ -32,19 +32,25 @@ class GroceeryCategory {
     }
   }
 
-  // Future<List<GroceeryCategory>> getCategories() async {
-  //   final response = await http.get(Uri.parse(
-  //       '$API_IP/api/categories?fields=category_name&sort=id'));
-  //
-  //   if (response.statusCode == 200) {
-  //     final result = jsonDecode(response.body);
-  //     Iterable list = result["data"];
-  //     print('==============================================================');
-  //     print(list);
-  //     print('==============================================================');
-  //     return list.map((movie) => GroceeryCategory.fromJson(movie)).toList();
-  //   } else {
-  //     throw Exception("Failed to load movies!");
-  //   }
-  // }
+  Future<List<GroceeryCategory>> getCategories() async {
+    final response = await http.get(
+      Uri.parse('$API_IP/api/categories?fields=category_name&sort=id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $API_KEY'
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final result = jsonDecode(response.body);
+      Iterable list = result["data"];
+      print('====================Get Categories List=======================');
+      print(list);
+      print('==============================================================');
+      print("getCategories(): Success to load categories!");
+      return list.map((movie) => GroceeryCategory.fromJson(movie)).toList();
+    } else {
+      throw Exception("getCategories(): Failed to load categories!");
+    }
+  }
 }
