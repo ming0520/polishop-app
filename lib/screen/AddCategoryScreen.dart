@@ -34,9 +34,10 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
     if (response.statusCode == 200) {
       successSnackBar(context);
       Navigator.pop(context);
+      print('_createCategory(): Success to create category.');
     } else {
       failedSnackBar(context);
-      throw Exception('Failed to create category.');
+      throw Exception('_createCategory(): Failed to create category.');
     }
   }
 
