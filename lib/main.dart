@@ -35,8 +35,14 @@ class _App extends State<App> {
   }
 
   Future<List<GroceeryCategory>> _fetchAllMovies() async {
-    final response = await http
-        .get(Uri.parse('$API_IP/api/categories?fields=category_name&sort=id'));
+    print('$API_IP/api/categories?fields=category_name&sort=id');
+    final response = await http.get(
+      Uri.parse('$API_IP/api/categories?fields=category_name&sort=id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $API_KEY'
+      },
+    );
 
     if (response.statusCode == 200) {
       final result = jsonDecode(response.body);
@@ -79,8 +85,13 @@ class _mainScreenState extends State<mainScreen> {
   }
 
   Future<List<GroceeryCategory>> _fetchAllMovies() async {
-    final response = await http
-        .get(Uri.parse('$API_IP/api/categories?fields=category_name&sort=id'));
+    print('$API_IP/api/categories?fields=category_name&sort=id');
+    final response = await http.get(
+        Uri.parse('$API_IP/api/categories?fields=category_name&sort=id'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $API_KEY'
+        });
 
     if (response.statusCode == 200) {
       final result = jsonDecode(response.body);
