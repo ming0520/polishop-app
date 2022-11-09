@@ -1,13 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:polishop/models/GroceeryCategory.dart';
 import 'package:polishop/models/Product.dart';
 import 'package:polishop/widgets/TextFormBuilder.dart';
 import 'package:polishop/widgets/SnackerBar.dart';
 import 'package:search_choices/search_choices.dart';
-import 'package:http/http.dart' as http;
-import 'package:polishop/env.dart';
 
 class ItemScreen extends StatefulWidget {
   Product product;
@@ -22,6 +18,7 @@ class _ItemScreenState extends State<ItemScreen> {
   TextEditingController productNameCon = TextEditingController();
   TextEditingController sellPriceCon = TextEditingController();
   TextEditingController buyPriceCon = TextEditingController();
+  TextEditingController extraCostCon = TextEditingController();
   TextEditingController stockInCon = TextEditingController();
   TextEditingController stockOutCon = TextEditingController();
   TextEditingController roeQuantityLevelCon = TextEditingController();
@@ -29,16 +26,18 @@ class _ItemScreenState extends State<ItemScreen> {
   TextEditingController balanceStockCon = TextEditingController();
   TextEditingController descriptionCon = TextEditingController();
 
-  // List<DropdownMenuItem> items = [];
+  List<DropdownMenuItem> items = [];
+  String? selectedValueSingleDialog;
 
   static const kFlexPad =
       EdgeInsets.only(bottom: 20, left: 20, right: 20, top: 0);
   static const kInputPad = EdgeInsets.all(10);
+  bool isImage = true;
 
   @override
   void initState() {
+    refreshCategoryList();
     refreshController();
-    // refreshCategoryList();
     super.initState();
   }
 
@@ -46,26 +45,38 @@ class _ItemScreenState extends State<ItemScreen> {
     productNameCon.text = widget.product.product_name;
     sellPriceCon.text = widget.product.sell_price.toString();
     buyPriceCon.text = widget.product.buy_price.toString();
+    extraCostCon.text = widget.product.extra_cost.toString();
     stockInCon.text = widget.product.stock_in.toString();
     stockOutCon.text = widget.product.stock_out.toString();
     roeQuantityLevelCon.text = widget.product.roe_quantity.toString();
     roeQuantityCon.text = widget.product.roe_quantity.toString();
     balanceStockCon.text = widget.product.balance_stock.toString();
     descriptionCon.text = widget.product.description;
+    if (widget.product.url == "null") {
+      isImage = false;
+    }
   }
 
-  // void refreshCategoryList() async {
-  //   GroceeryCategory generator =
-  //       GroceeryCategory(id: -99, category_name: '-99');
-  //   List<GroceeryCategory> categoryList = await generator.getCategories();
-  //   categoryList.forEach((element) {
-  //     print("id: " + element.id.toString() + " " + element.category_name);
-  //     items.add(DropdownMenuItem(
-  //       value: element.id,
-  //       child: Text(element.category_name),
-  //     ));
-  //   });
-  // }
+  // List<DropdownMenuItem> items = [
+  //   DropdownMenuItem(
+  //     value: "123",
+  //     child: Text('123'),
+  //   )
+  // ];
+  void refreshCategoryList() async {
+    selectedValueSingleDialog = widget.product.category_id.toString();
+    GroceeryCategory generator =
+        GroceeryCategory(id: -99, category_name: '-99');
+    List<GroceeryCategory> categoryList = await generator.getCategories();
+    categoryList.forEach((element) {
+      print("id: " + element.id.toString() + " " + element.category_name);
+      this.items.add(DropdownMenuItem(
+            value: element.id.toString(),
+            child: Text(element.category_name.toString()),
+          ));
+    });
+    setState(() {});
+  }
 
   // successSnackBar(context) {
   //   const snackBar = SnackBar(
@@ -99,6 +110,7 @@ class _ItemScreenState extends State<ItemScreen> {
     widget.product.product_name = productNameCon.text;
     widget.product.sell_price = double.parse(sellPriceCon.text);
     widget.product.buy_price = double.parse(buyPriceCon.text);
+    widget.product.extra_cost = double.parse(extraCostCon.text);
     widget.product.stock_in = int.parse(stockInCon.text);
     widget.product.stock_out = int.parse(stockOutCon.text);
     widget.product.roe_quantity = int.parse(roeQuantityLevelCon.text);
@@ -106,6 +118,8 @@ class _ItemScreenState extends State<ItemScreen> {
     widget.product.balance_stock =
         int.parse(stockInCon.text) - int.parse((stockOutCon.text));
     widget.product.description = descriptionCon.text;
+    widget.product.category_id =
+        int.parse(selectedValueSingleDialog.toString());
     Product newProduct;
     try {
       newProduct = await widget.product.updateProduct(widget.product);
@@ -119,13 +133,6 @@ class _ItemScreenState extends State<ItemScreen> {
       failedSnackBar(context);
     }
   }
-
-  // List<DropdownMenuItem> items = [
-  //   DropdownMenuItem(
-  //     value: "123",
-  //     child: Text('123'),
-  //   )
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +164,11 @@ class _ItemScreenState extends State<ItemScreen> {
           child: ListView(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.network('$API_IP' + widget.product.url.toString()),
+              Center(
+                child: isImage
+                    ? Image.network(widget.product.url.toString())
+                    : Text("No Image!"),
+              ),
               Text('Product ID: ' + widget.product.id.toString(),
                   textAlign: TextAlign.center),
               TextFormBuilder(
@@ -166,22 +177,23 @@ class _ItemScreenState extends State<ItemScreen> {
                 inputPad: kInputPad,
                 labelText: 'Product Name',
               ),
-              // Padding(
-              //   padding: kFlexPad,
-              //   child: SearchChoices.single(
-              //     items: items,
-              //     // value: selectedValueSingleDialog,
-              //     hint: "Select one",
-              //     searchHint: "Select one",
-              //     onChanged: (value) {
-              //       setState(() {
-              //         // selectedValueSingleDialog = value;
-              //       });
-              //     },
-              //     padding: kInputPad,
-              //     isExpanded: true,
-              //   ),
-              // ),
+              Padding(
+                padding: kFlexPad,
+                child: SearchChoices.single(
+                  items: items,
+                  value: selectedValueSingleDialog,
+                  hint: "Select one",
+                  searchHint: "Select one",
+                  onChanged: (value) {
+                    setState(() {
+                      selectedValueSingleDialog = value;
+                      print(selectedValueSingleDialog);
+                    });
+                  },
+                  padding: kInputPad,
+                  isExpanded: true,
+                ),
+              ),
               TextFormBuilder(
                 flexPad: kFlexPad,
                 controller: sellPriceCon,
@@ -194,6 +206,13 @@ class _ItemScreenState extends State<ItemScreen> {
                 controller: buyPriceCon,
                 inputPad: kInputPad,
                 labelText: 'Buy Price',
+                inputType: TextInputType.number,
+              ),
+              TextFormBuilder(
+                flexPad: kFlexPad,
+                controller: extraCostCon,
+                inputPad: kInputPad,
+                labelText: 'Extra Cost',
                 inputType: TextInputType.number,
               ),
               TextFormBuilder(
@@ -244,6 +263,24 @@ class _ItemScreenState extends State<ItemScreen> {
                 inputType: TextInputType.text,
                 maxLines: 5,
               ),
+              ElevatedButton(
+                onPressed: () async {
+                  var deleted = await widget.product.deleteProduct();
+                  if (deleted) {
+                    const snackBar = SnackBar(
+                      content: Text('Product is deleted!'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.pop(context);
+                  } else {
+                    const snackBar = SnackBar(
+                      content: Text('Delete failed!'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+                child: Text('Delete'),
+              )
             ],
           ),
         ));
