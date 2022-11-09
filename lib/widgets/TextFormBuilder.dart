@@ -30,21 +30,19 @@ class TextFormBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: flexPad,
-      child: Flexible(
-        child: TextFormField(
-          onEditingComplete: onEditingComplete,
-          maxLines: maxLines,
-          expands: expands,
-          keyboardType: inputType,
-          controller: controller,
-          decoration: InputDecoration(
-            contentPadding: inputPad,
-            border: UnderlineInputBorder(),
-            labelText: labelText,
-          ),
-          readOnly: readOnly,
-          onTap: onTap,
+      child: TextFormField(
+        onEditingComplete: onEditingComplete,
+        maxLines: maxLines,
+        expands: expands,
+        keyboardType: inputType,
+        controller: controller,
+        decoration: InputDecoration(
+          contentPadding: inputPad,
+          border: UnderlineInputBorder(),
+          labelText: labelText,
         ),
+        readOnly: readOnly,
+        onTap: onTap,
       ),
     );
   }
