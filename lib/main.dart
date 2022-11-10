@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:polishop/models/GroceeryCategory.dart';
 import 'package:polishop/screen/AddCategoryScreen.dart';
 import 'package:polishop/screen/ListScreen.dart';
+import 'package:polishop/screen/ReportScreen.dart';
 import 'package:polishop/widgets/categoryWidget.dart';
 import 'package:http/http.dart' as http;
+// import 'package:sidebarx/sidebarx.dart';
 import 'env.dart';
 
 void main() {
@@ -19,10 +21,12 @@ class App extends StatefulWidget {
 
 class _App extends State<App> {
   List<GroceeryCategory> _movies = List<GroceeryCategory>.empty(growable: true);
+  bool loading = false;
 
   @override
   void initState() {
     print('Initialize state');
+    loading = true;
     super.initState();
     populateAllMovies();
   }
@@ -30,6 +34,7 @@ class _App extends State<App> {
   void populateAllMovies() async {
     final movies = await _fetchAllMovies();
     setState(() {
+      loading = false;
       _movies = movies;
     });
   }
@@ -106,7 +111,69 @@ class _mainScreenState extends State<mainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Movie"),
+        title: Text("Polishop"),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.refresh_outlined,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              populateAllMovies();
+              print('Refreshed');
+            },
+          )
+        ],
+      ),
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Polishop',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28,
+                ),
+              ),
+            ),
+            // ListTile(
+            //   title: const Text(
+            //     'Category',
+            //     style: TextStyle(
+            //       color: Colors.black87,
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     // Update the state of the app.
+            //     // ...
+            //   },
+            // ),
+            ListTile(
+              title: const Text(
+                'Report',
+                style: TextStyle(color: Colors.black87),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReportScreen(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: ListView.builder(
           itemCount: widget.myMovieList.length,
