@@ -39,6 +39,8 @@ dependencies:
   http: ^0.13.5
   flutter_native_text_input: ^2.4.0
   search_choices: ^2.1.5
+#  sidebarx: ^0.14.0
+  syncfusion_flutter_datagrid: ^20.3.56
 
 dev_dependencies:
   flutter_test:
