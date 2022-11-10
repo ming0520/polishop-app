@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:polishop/env.dart';
+import 'package:polishop/env.dart';
 
 class Product {
   int id;
@@ -19,18 +20,18 @@ class Product {
   int balance_stock;
 
   Product(
-      {required this.id,
-      required this.product_name,
-      required this.sell_price,
-      required this.buy_price,
-      required this.extra_cost,
-      required this.stock_in,
-      required this.stock_out,
-      required this.roe_quantity_level,
-      required this.roe_quantity,
-      required this.balance_stock,
-      required this.description,
-      required this.category_id,
+      {this.id = -99,
+      this.product_name = "Apple",
+      this.sell_price = 0.0,
+      this.buy_price = 0.0,
+      this.extra_cost = 0.0,
+      this.stock_in = 1,
+      this.stock_out = 0,
+      this.roe_quantity_level = 0,
+      this.roe_quantity = 0,
+      this.balance_stock = 1,
+      this.description = 'description',
+      this.category_id = -99,
       required this.url});
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -39,17 +40,28 @@ class Product {
     var picUrl = '';
     if (product_picture == null && !PROD) {
       picUrl = "/uploads/156x156_0f81617074.png";
+      print("Product.fromJson(): Non Prod Picture is null");
       print(picUrl);
+    } else if (product_picture == null && PROD) {
+      print("Product.fromJson(): PROD Picture is null");
+      picUrl = TEMPLATE_IMAGE;
+      print("Product.fromJson(): Template Image: " + TEMPLATE_IMAGE);
     } else {
       picUrl = product_picture['attributes']['formats']['thumbnail']['url']
           .toString();
     }
     if (!PROD) {
       picUrl = API_IP + picUrl;
+      print("Product.fromJson(): Concat Picture Link: " + picUrl);
       print('Prod Environment:$PROD Url link is ' + picUrl);
     } else if (PROD && product_picture == null) {
-      picUrl == TEMPLATE_IMAGE;
+      picUrl = TEMPLATE_IMAGE;
+      print("Product.fromJson()2: Template Image: " + TEMPLATE_IMAGE);
+      print("Product.fromJson()2: Non Prod Picture is null");
+    } else {
+      picUrl = TEMPLATE_IMAGE;
     }
+
     return Product(
         id: json["id"],
         product_name: product["product_name"].toString(),
@@ -191,6 +203,37 @@ class Product {
       // If the server did not return a 200 OK response,
       // then throw an exception.
       throw Exception('Failed to create product.');
+    }
+  }
+
+  double getRevenue() {
+    return sell_price * stock_out.toDouble();
+  }
+
+  double getTotalCost() {
+    return buy_price * stock_in.toDouble();
+  }
+
+  double getProfit() {
+    return getRevenue() - getTotalCost() - extra_cost;
+  }
+
+  Future<List<Product>> getAllProduct() async {
+    String url = '$API_IP/api/products?populate=category,product_picture';
+    final response = await http.get(Uri.parse(url), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $API_KEY'
+    });
+    print(url);
+    if (response.statusCode == 200) {
+      final result = jsonDecode(response.body);
+      // print(response.body);
+      Iterable list = result["data"];
+      // print(result["data"]);
+      print(("getAllProduct(): Success to load Product!"));
+      return list.map((product) => Product.fromJson(product)).toList();
+    } else {
+      throw Exception("getAllProduct(): Failed to load Product!");
     }
   }
 }
