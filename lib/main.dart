@@ -3,8 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:polishop/models/GroceeryCategory.dart';
 import 'package:polishop/screen/AddCategoryScreen.dart';
+import 'package:polishop/screen/CostScreen.dart';
 import 'package:polishop/screen/ListProductScreen.dart';
+import 'package:polishop/screen/ProfitScreen.dart';
 import 'package:polishop/screen/ReportScreen.dart';
+import 'package:polishop/screen/RevenueScreen.dart';
+import 'package:polishop/screen/StockScreen.dart';
 import 'package:polishop/widgets/categoryWidget.dart';
 import 'package:http/http.dart' as http;
 // import 'package:sidebarx/sidebarx.dart';
@@ -61,7 +65,7 @@ class _App extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: "Movies App", initialRoute: '/', routes: {
+    return MaterialApp(title: kTITLE, initialRoute: '/', routes: {
       '/': (context) => mainScreen(movies: _movies),
       // '/list': (context) => const ListScreen(),
     });
@@ -111,7 +115,7 @@ class _mainScreenState extends State<mainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Polishop"),
+        title: Text(kTITLE),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -138,7 +142,7 @@ class _mainScreenState extends State<mainScreen> {
                 color: Colors.blue,
               ),
               child: Text(
-                'Polishop',
+                "E-Inventory Management System",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -158,6 +162,62 @@ class _mainScreenState extends State<mainScreen> {
             //     // ...
             //   },
             // ),
+            ListTile(
+              title: const Text(
+                'Revenue',
+                style: TextStyle(color: Colors.black87),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RevenueScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text(
+                'Cost',
+                style: TextStyle(color: Colors.black87),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CostScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text(
+                'Profit',
+                style: TextStyle(color: Colors.black87),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfitScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text(
+                'Stock',
+                style: TextStyle(color: Colors.black87),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StockScreen(),
+                  ),
+                );
+              },
+            ),
             ListTile(
               title: const Text(
                 'Report',
