@@ -129,7 +129,7 @@ class _ListScreenState extends State<ListScreen> {
                       buy_price: 0,
                       category_id: widget.category.id,
                       description: 'description',
-                      extra_cost: 0,
+                      // extra_cost: 0,
                       product_name: 'Apple',
                       roe_quantity: 0,
                       roe_quantity_level: 0,

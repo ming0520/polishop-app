@@ -163,8 +163,8 @@ class ProductDataSource extends DataGridSource {
                   columnName: 'cost', value: dataGridRow.getTotalCost()),
               DataGridCell<int>(
                   columnName: 'stock in', value: dataGridRow.stock_in),
-              DataGridCell<double>(
-                  columnName: 'extra cost', value: dataGridRow.extra_cost),
+              // DataGridCell<double>(
+              //     columnName: 'extra cost', value: dataGridRow.extra_cost),
               DataGridCell<double>(
                   columnName: 'profit', value: dataGridRow.getProfit()),
               DataGridCell<int>(

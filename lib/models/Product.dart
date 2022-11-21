@@ -9,7 +9,7 @@ class Product {
   String product_name;
   double sell_price;
   double buy_price;
-  double extra_cost;
+  // double extra_cost;
   int stock_in;
   int stock_out;
   int roe_quantity_level;
@@ -24,7 +24,7 @@ class Product {
       this.product_name = "Apple",
       this.sell_price = 0.0,
       this.buy_price = 0.0,
-      this.extra_cost = 0.0,
+      // this.extra_cost = 0.0,
       this.stock_in = 1,
       this.stock_out = 0,
       this.roe_quantity_level = 0,
@@ -67,7 +67,7 @@ class Product {
         product_name: product["product_name"].toString(),
         sell_price: product['sell_price'].toDouble(),
         buy_price: product['buy_price'].toDouble(),
-        extra_cost: product['extra_cost'].toDouble(),
+        // extra_cost: product['extra_cost'].toDouble(),
         stock_in: int.parse(product['stock_in']),
         stock_out: int.parse(product['stock_out']),
         roe_quantity_level: int.parse(product['roe_quantity_level']),
@@ -94,7 +94,7 @@ class Product {
           "product_name": this.product_name,
           "sell_price": this.sell_price,
           "buy_price": this.buy_price,
-          "extra_cost": this.extra_cost,
+          // "extra_cost": this.extra_cost,
           "stock_in": this.stock_in,
           "stock_out": this.stock_out,
           "balance_stock": this.balance_stock,
@@ -161,7 +161,7 @@ class Product {
           "product_name": this.product_name,
           "sell_price": this.sell_price,
           "buy_price": this.buy_price,
-          "extra_cost": this.extra_cost,
+          // "extra_cost": this.extra_cost,
           "stock_in": this.stock_in,
           "stock_out": this.stock_out,
           "balance_stock": this.balance_stock,
@@ -215,7 +215,8 @@ class Product {
   }
 
   double getProfit() {
-    return getRevenue() - getTotalCost() - extra_cost;
+    // return getRevenue() - getTotalCost() - extra_cost;
+    return getRevenue() - getTotalCost();
   }
 
   Future<List<Product>> getAllProduct() async {

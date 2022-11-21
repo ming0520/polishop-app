@@ -45,7 +45,7 @@ class _ItemScreenState extends State<ItemScreen> {
     productNameCon.text = widget.product.product_name;
     sellPriceCon.text = widget.product.sell_price.toString();
     buyPriceCon.text = widget.product.buy_price.toString();
-    extraCostCon.text = widget.product.extra_cost.toString();
+    // extraCostCon.text = widget.product.extra_cost.toString();
     stockInCon.text = widget.product.stock_in.toString();
     stockOutCon.text = widget.product.stock_out.toString();
     roeQuantityLevelCon.text = widget.product.roe_quantity.toString();
@@ -110,7 +110,7 @@ class _ItemScreenState extends State<ItemScreen> {
     widget.product.product_name = productNameCon.text;
     widget.product.sell_price = double.parse(sellPriceCon.text);
     widget.product.buy_price = double.parse(buyPriceCon.text);
-    widget.product.extra_cost = double.parse(extraCostCon.text);
+    // widget.product.extra_cost = double.parse(extraCostCon.text);
     widget.product.stock_in = int.parse(stockInCon.text);
     widget.product.stock_out = int.parse(stockOutCon.text);
     widget.product.roe_quantity = int.parse(roeQuantityLevelCon.text);
@@ -208,13 +208,13 @@ class _ItemScreenState extends State<ItemScreen> {
                 labelText: 'Buy Price',
                 inputType: TextInputType.number,
               ),
-              TextFormBuilder(
-                flexPad: kFlexPad,
-                controller: extraCostCon,
-                inputPad: kInputPad,
-                labelText: 'Extra Cost',
-                inputType: TextInputType.number,
-              ),
+              // TextFormBuilder(
+              //   flexPad: kFlexPad,
+              //   controller: extraCostCon,
+              //   inputPad: kInputPad,
+              //   labelText: 'Extra Cost',
+              //   inputType: TextInputType.number,
+              // ),
               TextFormBuilder(
                 flexPad: kFlexPad,
                 controller: stockInCon,
