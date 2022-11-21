@@ -5,16 +5,16 @@ import 'package:polishop/widgets/TextFormBuilder.dart';
 import 'package:polishop/widgets/SnackerBar.dart';
 import 'package:search_choices/search_choices.dart';
 
-class ItemScreen extends StatefulWidget {
+class AddProductScreen extends StatefulWidget {
   Product product;
   // const ItemScreen({Key? key}) : super(key: key);
-  ItemScreen({required this.product});
+  AddProductScreen({required this.product});
 
   @override
-  State<ItemScreen> createState() => _ItemScreenState();
+  State<AddProductScreen> createState() => _AddProductScreenState();
 }
 
-class _ItemScreenState extends State<ItemScreen> {
+class _AddProductScreenState extends State<AddProductScreen> {
   TextEditingController productNameCon = TextEditingController();
   TextEditingController sellPriceCon = TextEditingController();
   TextEditingController buyPriceCon = TextEditingController();

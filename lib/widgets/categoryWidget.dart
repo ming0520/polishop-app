@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:polishop/models/GroceeryCategory.dart';
-import 'package:polishop/screen/ListScreen.dart';
+import 'package:polishop/screen/ListProductScreen.dart';
 
 class MoviesWidget extends StatelessWidget {
   final List<GroceeryCategory> movies;

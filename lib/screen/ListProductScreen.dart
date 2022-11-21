@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'ItemScreen.dart';
+import 'AddProductScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:polishop/models/GroceeryCategory.dart';
 import 'package:polishop/models/Product.dart';
@@ -82,7 +82,7 @@ class _ListScreenState extends State<ListScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ItemScreen(product: product),
+                builder: (context) => AddProductScreen(product: product),
               ),
             ).then((value) => _populateAllProduct());
           },
@@ -122,7 +122,7 @@ class _ListScreenState extends State<ListScreen> {
           await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ItemScreen(
+              builder: (context) => AddProductScreen(
                   product: Product(
                       id: -99,
                       balance_stock: 0,
