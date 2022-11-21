@@ -108,17 +108,17 @@ class _ReportScreenState extends State<ReportScreen> {
                       ),
                     ),
                   ),
-                  GridColumn(
-                    columnName: 'extra cost',
-                    label: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        'Extra Cost',
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ),
+                  // GridColumn(
+                  //   columnName: 'extra cost',
+                  //   label: Container(
+                  //     padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  //     alignment: Alignment.centerRight,
+                  //     child: Text(
+                  //       'Extra Cost',
+                  //       overflow: TextOverflow.ellipsis,
+                  //     ),
+                  //   ),
+                  // ),
                   GridColumn(
                     columnName: 'profit',
                     label: Container(
