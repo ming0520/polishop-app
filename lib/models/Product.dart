@@ -18,21 +18,24 @@ class Product {
   int category_id;
   String url;
   int balance_stock;
+  var updatedAt;
 
-  Product(
-      {this.id = -99,
-      this.product_name = "Apple",
-      this.sell_price = 0.0,
-      this.buy_price = 0.0,
-      // this.extra_cost = 0.0,
-      this.stock_in = 1,
-      this.stock_out = 0,
-      this.roe_quantity_level = 0,
-      this.roe_quantity = 0,
-      this.balance_stock = 1,
-      this.description = 'description',
-      this.category_id = -99,
-      required this.url});
+  Product({
+    this.id = -99,
+    this.product_name = "Apple",
+    this.sell_price = 0.0,
+    this.buy_price = 0.0,
+    // this.extra_cost = 0.0,
+    this.stock_in = 1,
+    this.stock_out = 0,
+    this.roe_quantity_level = 0,
+    this.roe_quantity = 0,
+    this.balance_stock = 1,
+    this.description = 'description',
+    this.category_id = -99,
+    required this.url,
+    this.updatedAt,
+  });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     var product = json["attributes"];
@@ -75,7 +78,8 @@ class Product {
         description: product['description'].toString(),
         balance_stock: int.parse(product['balance_stock']),
         category_id: product['category']['data']['id'],
-        url: picUrl);
+        url: picUrl,
+        updatedAt: product['updatedAt']);
   }
 
   Future<Product> updateProduct(Product product) async {
