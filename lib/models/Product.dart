@@ -59,10 +59,18 @@ class Product {
       print('Prod Environment:$PROD Url link is ' + picUrl);
     } else if (PROD && product_picture == null) {
       picUrl = TEMPLATE_IMAGE;
-      print("Product.fromJson()2: Template Image: " + TEMPLATE_IMAGE);
-      print("Product.fromJson()2: Non Prod Picture is null");
+      print("Product.fromJson(): Template Image: " + TEMPLATE_IMAGE);
+      print("Product.fromJson(): Non Prod Picture is null");
     } else {
       picUrl = TEMPLATE_IMAGE;
+    }
+    var _categoryId = -99;
+    if (product['category']['data'] != null) {
+      print('Product.fromJson(): Have Category ID');
+      _categoryId = product['category']['data']['id'];
+    } else {
+      print("Product.fromJson(): No Category id");
+      _categoryId = -99;
     }
 
     return Product(
@@ -77,14 +85,14 @@ class Product {
         roe_quantity: int.parse(product['roe_quantity']),
         description: product['description'].toString(),
         balance_stock: int.parse(product['balance_stock']),
-        category_id: product['category']['data']['id'],
+        category_id: _categoryId,
         url: picUrl,
         updatedAt: product['updatedAt']);
   }
 
   Future<Product> updateProduct(Product product) async {
     if (product.id == -99) {
-      print('Create Product!');
+      print('Product.fromJson(): Create Product!');
       return await createProduct(product);
     }
     final response = await http.put(
@@ -113,7 +121,7 @@ class Product {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      print('$API_IP/api/products/' +
+      print('updateProduct(): $API_IP/api/products/' +
           this.id.toString() +
           '\?&populate=category,product_picture');
 
