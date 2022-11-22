@@ -64,10 +64,10 @@ class _ListScreenState extends State<ListScreen> {
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 0.5),
-          mainAxisSpacing: 5,
+              (MediaQuery.of(context).size.height / 1.2),
+          mainAxisSpacing: 0,
           // childAspectRatio: 3,
-          crossAxisSpacing: 5),
+          crossAxisSpacing: 3),
       controller: controller,
       itemCount: _product.length,
       itemBuilder: (context, index) {
@@ -88,7 +88,7 @@ class _ListScreenState extends State<ListScreen> {
           },
           child: Container(
             // padding: EdgeInsets.all(16),
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(6.0),
             child: GridTile(
               // header: Text(
               //   product.product_name.toString(),
