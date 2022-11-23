@@ -45,7 +45,7 @@ class _ProfitScreenState extends State<ProfitScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Report"),
+          title: Text("Profit Report"),
         ),
         body: _loading
             ? Container(

@@ -45,7 +45,7 @@ class _CostScreenState extends State<CostScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Report"),
+          title: Text("Cost Report"),
         ),
         body: _loading
             ? Container(
