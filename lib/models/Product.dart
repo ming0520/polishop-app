@@ -41,8 +41,12 @@ class Product {
     var product = json["attributes"];
     var product_picture = product['product_picture']["data"];
     var picUrl = '';
+    print(product["product_name"].toString() +
+        " price: " +
+        double.parse(product['sell_price'].toString()).toString());
     if (product_picture == null && !PROD) {
       picUrl = "/uploads/156x156_0f81617074.png";
+
       print("Product.fromJson(): Non Prod Picture is null");
       print(picUrl);
     } else if (product_picture == null && PROD) {
@@ -76,7 +80,7 @@ class Product {
     return Product(
         id: json["id"],
         product_name: product["product_name"].toString(),
-        sell_price: product['sell_price'].toDouble(),
+        sell_price: double.parse(product['sell_price'].toString()),
         buy_price: product['buy_price'].toDouble(),
         // extra_cost: product['extra_cost'].toDouble(),
         stock_in: int.parse(product['stock_in']),
@@ -228,7 +232,7 @@ class Product {
 
   double getProfit() {
     // return getRevenue() - getTotalCost() - extra_cost;
-    return getRevenue() - getTotalCost();
+    return getRevenue() - stock_out.toDouble() * buy_price;
   }
 
   Future<List<Product>> getAllProduct() async {
