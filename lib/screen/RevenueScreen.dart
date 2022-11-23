@@ -56,8 +56,8 @@ class _RevenueScreenState extends State<RevenueScreen> {
                 // defaultColumnWidth: 150,
                 gridLinesVisibility: GridLinesVisibility.both,
                 headerGridLinesVisibility: GridLinesVisibility.both,
-                columnSizer: _customColumnSizer,
-                columnWidthMode: ColumnWidthMode.auto,
+                // columnSizer: _customColumnSizer,
+                // columnWidthMode: ColumnWidthMode.auto,
                 source: _productDataSource,
                 columns: [
                   GridColumn(
@@ -85,7 +85,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
                           alignment: Alignment.centerRight,
                           child: Text(
                             'Price',
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.visible,
                           ))),
                   GridColumn(
                       columnName: 'Stock Out',
@@ -94,7 +94,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
                           alignment: Alignment.centerRight,
                           child: Text(
                             'Quantity',
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.visible,
                           ))),
                   GridColumn(
                       columnName: 'revenue',
@@ -103,7 +103,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
                           alignment: Alignment.centerRight,
                           child: Text(
                             'Revenue',
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.visible,
                           ))),
                 ],
               ),
