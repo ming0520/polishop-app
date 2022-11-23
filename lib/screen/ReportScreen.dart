@@ -44,7 +44,7 @@ class _ReportScreenState extends State<ReportScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Report"),
+          title: Text("Detail Report"),
         ),
         body: _loading
             ? Container(
@@ -72,44 +72,6 @@ class _ReportScreenState extends State<ReportScreen> {
                             overflow: TextOverflow.visible,
                           ))),
                   GridColumn(
-                      columnName: 'revenue',
-                      label: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            'Revenue',
-                            overflow: TextOverflow.visible,
-                          ))),
-                  GridColumn(
-                      columnName: 'stock out',
-                      label: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            'Out',
-                            overflow: TextOverflow.visible,
-                          ))),
-                  GridColumn(
-                      columnName: 'sell price',
-                      label: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            'Sell Price',
-                            overflow: TextOverflow.visible,
-                          ))),
-                  GridColumn(
-                    columnName: 'cost',
-                    label: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        'Unit Cost',
-                        overflow: TextOverflow.visible,
-                      ),
-                    ),
-                  ),
-                  GridColumn(
                     columnName: 'stock in',
                     label: Container(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -122,16 +84,34 @@ class _ReportScreenState extends State<ReportScreen> {
                     ),
                   ),
                   // GridColumn(
-                  //   columnName: 'extra cost',
-                  //   label: Container(
-                  //     padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  //     alignment: Alignment.centerRight,
-                  //     child: Text(
-                  //       'Extra Cost',
-                  //       overflow: TextOverflow.ellipsis,
-                  //     ),
-                  //   ),
-                  // ),
+                  //     columnName: 'revenue',
+                  //     label: Container(
+                  //         padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  //         alignment: Alignment.centerRight,
+                  //         child: Text(
+                  //           'Revenue',
+                  //           overflow: TextOverflow.visible,
+                  //         ))),
+                  GridColumn(
+                      columnName: 'stock out',
+                      label: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            'Out',
+                            overflow: TextOverflow.visible,
+                          ))),
+                  GridColumn(
+                    columnName: 'balance stock',
+                    label: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        'Balance Stock',
+                        overflow: TextOverflow.visible,
+                      ),
+                    ),
+                  ),
                   GridColumn(
                     columnName: 'profit',
                     label: Container(
@@ -144,16 +124,37 @@ class _ReportScreenState extends State<ReportScreen> {
                     ),
                   ),
                   GridColumn(
-                    columnName: 'balance stock',
+                      columnName: 'sell price',
+                      label: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            'Sell Price',
+                            overflow: TextOverflow.visible,
+                          ))),
+                  GridColumn(
+                    columnName: 'unit cost',
                     label: Container(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       alignment: Alignment.centerRight,
                       child: Text(
-                        'Balance Stock',
+                        'Unit Cost',
                         overflow: TextOverflow.visible,
                       ),
                     ),
                   ),
+
+                  // GridColumn(
+                  //   columnName: 'extra cost',
+                  //   label: Container(
+                  //     padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  //     alignment: Alignment.centerRight,
+                  //     child: Text(
+                  //       'Extra Cost',
+                  //       overflow: TextOverflow.ellipsis,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
       ),
@@ -168,23 +169,24 @@ class ProductDataSource extends DataGridSource {
               // DataGridCell<int>(columnName: 'id', value: dataGridRow.id),
               DataGridCell<String>(
                   columnName: 'name', value: dataGridRow.product_name),
-              DataGridCell<double>(
-                  columnName: 'revenue', value: dataGridRow.getRevenue()),
+              // DataGridCell<double>(
+              //     columnName: 'revenue', value: dataGridRow.getRevenue()),
+              DataGridCell<int>(
+                  columnName: 'stock in', value: dataGridRow.stock_in),
               DataGridCell<int>(
                   columnName: 'stock out', value: dataGridRow.stock_out),
+
+              // DataGridCell<double>(
+              //     columnName: 'extra cost', value: dataGridRow.extra_cost),
+              DataGridCell<int>(
+                  columnName: 'balance stock',
+                  value: dataGridRow.balance_stock),
+              DataGridCell<double>(
+                  columnName: 'profit', value: dataGridRow.getProfit()),
               DataGridCell<double>(
                   columnName: 'sell price', value: dataGridRow.sell_price),
               DataGridCell<double>(
                   columnName: 'unit cost', value: dataGridRow.buy_price),
-              DataGridCell<int>(
-                  columnName: 'stock in', value: dataGridRow.stock_in),
-              // DataGridCell<double>(
-              //     columnName: 'extra cost', value: dataGridRow.extra_cost),
-              DataGridCell<double>(
-                  columnName: 'profit', value: dataGridRow.getProfit()),
-              DataGridCell<int>(
-                  columnName: 'balance stock',
-                  value: dataGridRow.balance_stock),
             ]))
         .toList();
   }
