@@ -56,8 +56,8 @@ class _CostScreenState extends State<CostScreen> {
                 // defaultColumnWidth: 150,
                 gridLinesVisibility: GridLinesVisibility.both,
                 headerGridLinesVisibility: GridLinesVisibility.both,
-                columnSizer: _customColumnSizer,
-                columnWidthMode: ColumnWidthMode.auto,
+                // columnSizer: _customColumnSizer,
+                // columnWidthMode: ColumnWidthMode.auto,
                 source: _productDataSource,
                 columns: [
                   GridColumn(
@@ -85,7 +85,7 @@ class _CostScreenState extends State<CostScreen> {
                           alignment: Alignment.centerRight,
                           child: Text(
                             'Price',
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.visible,
                           ))),
                   GridColumn(
                       columnName: 'Stock Out',
@@ -94,7 +94,7 @@ class _CostScreenState extends State<CostScreen> {
                           alignment: Alignment.centerRight,
                           child: Text(
                             'Quantity',
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.visible,
                           ))),
                   GridColumn(
                       columnName: 'cost',
@@ -103,7 +103,7 @@ class _CostScreenState extends State<CostScreen> {
                           alignment: Alignment.centerRight,
                           child: Text(
                             'Cost',
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.visible,
                           ))),
                 ],
               ),
