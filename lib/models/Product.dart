@@ -253,4 +253,23 @@ class Product {
       throw Exception("getAllProduct(): Failed to load Product!");
     }
   }
+
+  Future<List<Product>> getRestockProduct() async {
+    String url = '$API_IP/api/products?populate=category,product_picture';
+    final response = await http.get(Uri.parse(url), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $API_KEY'
+    });
+    print(url);
+    if (response.statusCode == 200) {
+      final result = jsonDecode(response.body);
+      // print(response.body);
+      Iterable list = result["data"];
+      // print(result["data"]);
+      print(("getAllProduct(): Success to load Product!"));
+      return list.map((product) => Product.fromJson(product)).toList();
+    } else {
+      throw Exception("getAllProduct(): Failed to load Product!");
+    }
+  }
 }
