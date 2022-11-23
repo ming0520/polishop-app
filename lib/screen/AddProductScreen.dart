@@ -48,7 +48,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     // extraCostCon.text = widget.product.extra_cost.toString();
     stockInCon.text = widget.product.stock_in.toString();
     stockOutCon.text = widget.product.stock_out.toString();
-    roeQuantityLevelCon.text = widget.product.roe_quantity.toString();
+    roeQuantityLevelCon.text = widget.product.roe_quantity_level.toString();
     roeQuantityCon.text = widget.product.roe_quantity.toString();
     balanceStockCon.text = widget.product.balance_stock.toString();
     descriptionCon.text = widget.product.description;
@@ -113,7 +113,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     // widget.product.extra_cost = double.parse(extraCostCon.text);
     widget.product.stock_in = int.parse(stockInCon.text);
     widget.product.stock_out = int.parse(stockOutCon.text);
-    widget.product.roe_quantity = int.parse(roeQuantityLevelCon.text);
+    widget.product.roe_quantity_level = int.parse(roeQuantityLevelCon.text);
     widget.product.roe_quantity = int.parse(roeQuantityCon.text);
     widget.product.balance_stock =
         int.parse(stockInCon.text) - int.parse((stockOutCon.text));
@@ -232,14 +232,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
               ),
               TextFormBuilder(
                 flexPad: kFlexPad,
-                controller: roeQuantityCon,
+                controller: roeQuantityLevelCon,
                 inputPad: kInputPad,
                 labelText: 'Roe Quantity Level',
                 inputType: TextInputType.number,
               ),
               TextFormBuilder(
                 flexPad: kFlexPad,
-                controller: roeQuantityLevelCon,
+                controller: roeQuantityCon,
                 inputPad: kInputPad,
                 labelText: 'Roe Quantity',
                 inputType: TextInputType.number,
