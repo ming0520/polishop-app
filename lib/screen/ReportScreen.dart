@@ -55,8 +55,11 @@ class _ReportScreenState extends State<ReportScreen> {
                 // defaultColumnWidth: 150,
                 gridLinesVisibility: GridLinesVisibility.both,
                 headerGridLinesVisibility: GridLinesVisibility.both,
-                columnSizer: _customColumnSizer,
-                columnWidthMode: ColumnWidthMode.auto,
+                // columnSizer: _customColumnSizer,
+                // columnWidthMode: ColumnWidthMode.auto,
+                // columnWidthMode: ColumnWidthMode.auto,
+                // columnWidthCalculationRange:
+                //     ColumnWidthCalculationRange.allRows,
                 source: _productDataSource,
                 columns: [
                   GridColumn(
@@ -75,7 +78,7 @@ class _ReportScreenState extends State<ReportScreen> {
                           alignment: Alignment.centerRight,
                           child: Text(
                             'Revenue',
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.visible,
                           ))),
                   GridColumn(
                       columnName: 'stock out',
@@ -84,7 +87,16 @@ class _ReportScreenState extends State<ReportScreen> {
                           alignment: Alignment.centerRight,
                           child: Text(
                             'Out',
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.visible,
+                          ))),
+                  GridColumn(
+                      columnName: 'sell price',
+                      label: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            'Sell Price',
+                            overflow: TextOverflow.visible,
                           ))),
                   GridColumn(
                     columnName: 'cost',
@@ -92,8 +104,8 @@ class _ReportScreenState extends State<ReportScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       alignment: Alignment.centerRight,
                       child: Text(
-                        'Cost',
-                        overflow: TextOverflow.ellipsis,
+                        'Unit Cost',
+                        overflow: TextOverflow.visible,
                       ),
                     ),
                   ),
@@ -104,7 +116,8 @@ class _ReportScreenState extends State<ReportScreen> {
                       alignment: Alignment.centerRight,
                       child: Text(
                         'In',
-                        overflow: TextOverflow.ellipsis,
+                        // overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.visible,
                       ),
                     ),
                   ),
@@ -126,7 +139,7 @@ class _ReportScreenState extends State<ReportScreen> {
                       alignment: Alignment.centerRight,
                       child: Text(
                         'Profit',
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.visible,
                       ),
                     ),
                   ),
@@ -137,7 +150,7 @@ class _ReportScreenState extends State<ReportScreen> {
                       alignment: Alignment.centerRight,
                       child: Text(
                         'Balance Stock',
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.visible,
                       ),
                     ),
                   ),
@@ -160,7 +173,9 @@ class ProductDataSource extends DataGridSource {
               DataGridCell<int>(
                   columnName: 'stock out', value: dataGridRow.stock_out),
               DataGridCell<double>(
-                  columnName: 'cost', value: dataGridRow.getTotalCost()),
+                  columnName: 'sell price', value: dataGridRow.sell_price),
+              DataGridCell<double>(
+                  columnName: 'unit cost', value: dataGridRow.buy_price),
               DataGridCell<int>(
                   columnName: 'stock in', value: dataGridRow.stock_in),
               // DataGridCell<double>(
@@ -188,10 +203,10 @@ class ProductDataSource extends DataGridSource {
                   dataGridCell.columnName == 'revenue')
               ? Alignment.centerLeft
               : Alignment.centerRight,
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             dataGridCell.value.toString(),
-            overflow: TextOverflow.ellipsis,
+            overflow: TextOverflow.visible,
           ));
     }).toList());
   }
