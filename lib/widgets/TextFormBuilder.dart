@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 class TextFormBuilder extends StatelessWidget {
-  TextFormBuilder({
-    Key? key,
-    required this.flexPad,
-    required this.controller,
-    required this.inputPad,
-    required this.labelText,
-    this.inputType = TextInputType.text,
-    this.maxLines = 1,
-    this.expands = false,
-    this.onEditingComplete,
-    this.readOnly = false,
-    this.onTap,
-  }) : super(key: key);
+  TextFormBuilder(
+      {Key? key,
+      required this.flexPad,
+      required this.controller,
+      required this.inputPad,
+      required this.labelText,
+      this.inputType = TextInputType.text,
+      this.maxLines = 1,
+      this.expands = false,
+      this.onEditingComplete,
+      this.readOnly = false,
+      this.onTap,
+      this.isEnable = true})
+      : super(key: key);
 
   EdgeInsets flexPad;
   TextEditingController controller;
@@ -25,6 +26,7 @@ class TextFormBuilder extends StatelessWidget {
   var onEditingComplete;
   bool readOnly;
   var onTap;
+  bool isEnable;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class TextFormBuilder extends StatelessWidget {
         ),
         readOnly: readOnly,
         onTap: onTap,
+        enabled: isEnable,
       ),
     );
   }
