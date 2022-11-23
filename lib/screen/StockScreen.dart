@@ -45,7 +45,7 @@ class _StockScreenState extends State<StockScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Report"),
+          title: Text("Stock Report"),
         ),
         body: _loading
             ? Container(

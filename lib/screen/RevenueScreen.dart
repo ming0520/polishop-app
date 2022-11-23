@@ -45,7 +45,7 @@ class _RevenueScreenState extends State<RevenueScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Report"),
+          title: Text("Sales Report"),
         ),
         body: _loading
             ? Container(
