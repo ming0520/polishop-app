@@ -115,7 +115,7 @@ class _mainScreenState extends State<mainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(kTITLE),
+        title: Text('Product Category'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -164,49 +164,7 @@ class _mainScreenState extends State<mainScreen> {
             // ),
             ListTile(
               title: const Text(
-                'Revenue',
-                style: TextStyle(color: Colors.black87),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => RevenueScreen(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text(
-                'Cost',
-                style: TextStyle(color: Colors.black87),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CostScreen(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text(
-                'Profit',
-                style: TextStyle(color: Colors.black87),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfitScreen(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text(
-                'Stock',
+                'Stock Report',
                 style: TextStyle(color: Colors.black87),
               ),
               onTap: () {
@@ -220,7 +178,50 @@ class _mainScreenState extends State<mainScreen> {
             ),
             ListTile(
               title: const Text(
-                'Report',
+                'Sales Report',
+                style: TextStyle(color: Colors.black87),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RevenueScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text(
+                'Cost Report',
+                style: TextStyle(color: Colors.black87),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CostScreen(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text(
+                'Profit Report',
+                style: TextStyle(color: Colors.black87),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfitScreen(),
+                  ),
+                );
+              },
+            ),
+
+            ListTile(
+              title: const Text(
+                'All Report',
                 style: TextStyle(color: Colors.black87),
               ),
               onTap: () {
