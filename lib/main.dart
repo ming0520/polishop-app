@@ -115,6 +115,7 @@ class _mainScreenState extends State<mainScreen> {
     loading = true;
     final movies = await _fetchAllMovies();
     setState(() {
+      _dialogBuilder(context);
       loading = false;
       widget.myMovieList = movies;
     });
@@ -136,6 +137,43 @@ class _mainScreenState extends State<mainScreen> {
     } else {
       throw Exception("Failed to load movies!");
     }
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Notification'),
+          content: const Text('Need restock!'),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Ignore'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('View'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RestockScreen(),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

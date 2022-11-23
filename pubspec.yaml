@@ -42,6 +42,7 @@ dependencies:
 #  sidebarx: ^0.14.0
   syncfusion_flutter_datagrid: ^20.3.56
   intl: ^0.17.0
+  flutter_dialogs: ^3.0.0
 
 dev_dependencies:
   flutter_test:
