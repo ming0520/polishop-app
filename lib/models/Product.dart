@@ -1,8 +1,13 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:polishop/env.dart';
-import 'package:polishop/env.dart';
+import 'package:dio/dio.dart';
+import 'package:path/path.dart';
+import 'package:flutter/foundation.dart';
 
 class Product {
   int id;
@@ -168,6 +173,24 @@ class Product {
     return false;
   }
 
+  Future<Product> updateMySelf() async {
+    String url = '$API_IP/api/products/' +
+        this.id.toString() +
+        '\?&populate=category,product_picture';
+    final response = await http.get(Uri.parse(url), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $API_KEY'
+    });
+    // print(url);
+    if (response.statusCode == 200) {
+      // final result = jsonDecode(response.body);
+      // print(response.body);
+      return Product.fromJson(jsonDecode(response.body)['data']);
+    } else {
+      throw Exception("updateMySelf(): Failed to load Product!");
+    }
+  }
+
   Future<Product> createProduct(Product product) async {
     final response = await http.post(
       Uri.parse('$API_IP/api/products'),
@@ -273,6 +296,42 @@ class Product {
       return list.map((product) => Product.fromJson(product)).toList();
     } else {
       throw Exception("getAllProduct(): Failed to load Product!");
+    }
+  }
+
+  Future<bool> updateImage(File image) async {
+    String url = '$API_IP/api/upload';
+    // print(url);
+    // var request = http.MultipartRequest('POST', Uri.parse(url));
+    // request.fields['ref'] = "api::product.product";
+    // request.fields['refId'] = this.id.toString();
+    // request.fields['field'] = "product_picture";
+    //
+    // request.files.add(http.MultipartFile.fromBytes(
+    //     'files', File(image.path).readAsBytesSync(),
+    //     filename: image.path));
+    //
+    // var response = await request.send();
+    print(
+        "path: " + image.absolute.path + " filename: " + basename(image.path));
+    Dio dio = new Dio();
+    dio.options.headers["Authorization"] = "Bearer ${API_KEY}";
+    FormData formData = FormData.fromMap({
+      "ref": "api::product.product",
+      "refId": this.id.toString(),
+      "field": "product_picture",
+      "files": await MultipartFile.fromFile(image.absolute.path,
+          filename: basename(image.path))
+    });
+    var response = await dio.post(url, data: formData);
+    print(response.data.toString());
+
+    if (response.statusCode == 200) {
+      print(("updateImage(): Success to update image!"));
+      return true;
+    } else {
+      print("updateImage(): Failed to update image!");
+      return false;
     }
   }
 }

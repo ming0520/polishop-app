@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:polishop/models/GroceeryCategory.dart';
 import 'package:polishop/models/Product.dart';
 import 'package:polishop/widgets/TextFormBuilder.dart';
@@ -28,6 +31,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   List<DropdownMenuItem> items = [];
   String? selectedValueSingleDialog;
+  bool _updateImage = false;
+  ImagePicker _picker = ImagePicker();
+  XFile? _image;
+  late File file;
 
   static const kFlexPad =
       EdgeInsets.only(bottom: 20, left: 20, right: 20, top: 0);
@@ -134,6 +141,136 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
   }
 
+  Future getImageFromGallery(bool isGallery) async {
+    var image;
+    if (isGallery) {
+      _image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    } else {
+      _image = await ImagePicker().pickImage(source: ImageSource.camera);
+    }
+    if (image == null) {
+      setState(() {
+        print('No image selected');
+        _updateImage = false;
+        Navigator.pop(context);
+        return;
+      });
+    } else if (image != null) {
+      print('Updating image...');
+      _updateImage = true;
+    }
+
+    setState(() {
+      // _image = image;
+    });
+
+    bool isUpdated = await widget.product.updateImage(File(_image!.path));
+    print("Server return: " + isUpdated.toString());
+    widget.product = await widget.product.updateMySelf();
+    setState(() {
+      // _image = image;
+
+      if (isUpdated) {
+        _updateImage = false;
+        updateImageFailed(context) {
+          const snackBar = SnackBar(
+            content: Text('Image Update Successfully!'),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      } else {
+        updateImageFailed(context) {
+          const snackBar = SnackBar(
+            content: Text('Image Update Failed!'),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+
+        Navigator.pop(context);
+      }
+    });
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Please select image source'),
+          // content: const Text('Please select image source'),
+          actions: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.camera_alt_outlined, size: 60),
+                      onPressed: () {
+                        getImageFromGallery(false).then((val) {
+                          setState(() {
+                            // Navigator.pop(context);
+                          });
+                        });
+                        ;
+                      },
+                    ),
+                    SizedBox(
+                      width: 50,
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.image_outlined, size: 60),
+                      onPressed: () {
+                        getImageFromGallery(true).then((val) {
+                          setState(() {
+                            // Navigator.pop(context);
+                          });
+                        });
+                      },
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: Theme.of(context).textTheme.labelLarge,
+                    ),
+                    child: const Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ),
+              ],
+            ),
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     textStyle: Theme.of(context).textTheme.labelLarge,
+            //   ),
+            //   child: const Text('Camera'),
+            //   onPressed: () {},
+            // ),
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     textStyle: Theme.of(context).textTheme.labelLarge,
+            //   ),
+            //   child: const Text('Gallery'),
+            //   onPressed: () {},
+            // ),
+          ],
+        );
+      },
+    );
+  }
+
+  XFile? imm;
+  bool isImm = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -162,12 +299,37 @@ class _AddProductScreenState extends State<AddProductScreen> {
         ),
         body: Center(
           child: ListView(
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(height: 10),
               Center(
-                child: isImage
-                    ? Image.network(widget.product.url.toString())
-                    : Text("No Image!"),
+                child: _updateImage
+                    ? CircularProgressIndicator()
+                    : isImage
+                        ? Image.network(widget.product.url.toString())
+                        : Text("No Image!"),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              // isImm ? Image.file(File(imm!.path)) : Text('No IMM'),
+
+              GestureDetector(
+                child: Center(
+                  child: Text(
+                    "Change product picture",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                onTap: () async {
+                  _dialogBuilder(context);
+                },
+              ),
+              SizedBox(
+                height: 10,
               ),
               Text('Product ID: ' + widget.product.id.toString(),
                   textAlign: TextAlign.center),
