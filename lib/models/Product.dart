@@ -46,17 +46,18 @@ class Product {
         double.parse(product['sell_price'].toString()).toString());
     if (product_picture == null && !PROD) {
       picUrl = "/uploads/156x156_0f81617074.png";
-
       print("Product.fromJson(): Non Prod Picture is null");
       print(picUrl);
-    } else if (product_picture == null && PROD) {
-      print("Product.fromJson(): PROD Picture is null");
-      picUrl = TEMPLATE_IMAGE;
-      print("Product.fromJson(): Template Image: " + TEMPLATE_IMAGE);
-    } else {
-      picUrl = product_picture['attributes']['formats']['thumbnail']['url']
-          .toString();
     }
+    // else if (product_picture == null && PROD) {
+    //   print("Product.fromJson(): PROD Picture is null");
+    //   picUrl = TEMPLATE_IMAGE;
+    //   print("Product.fromJson(): Template Image: " + TEMPLATE_IMAGE);
+    // } else {
+    //   picUrl = product_picture['attributes']['formats']['thumbnail']['url']
+    //       .toString();
+    // }
+
     if (!PROD) {
       picUrl = API_IP + picUrl;
       print("Product.fromJson(): Concat Picture Link: " + picUrl);
@@ -64,9 +65,11 @@ class Product {
     } else if (PROD && product_picture == null) {
       picUrl = TEMPLATE_IMAGE;
       print("Product.fromJson(): Template Image: " + TEMPLATE_IMAGE);
-      print("Product.fromJson(): Non Prod Picture is null");
+      print("Product.fromJson(): Prod Picture is null");
     } else {
-      picUrl = TEMPLATE_IMAGE;
+      // picUrl = TEMPLATE_IMAGE;
+      picUrl = product_picture['attributes']['formats']['thumbnail']['url']
+          .toString();
     }
     var _categoryId = -99;
     if (product['category']['data'] != null) {

@@ -98,7 +98,9 @@ class _ListScreenState extends State<ListScreen> {
                 child: SafeArea(
                   child: (Column(
                     children: [
-                      Image.network(product.url.toString()),
+                      Expanded(
+                          flex: 3,
+                          child: Image.network(product.url.toString())),
                       Text(product.product_name.toString()),
                     ],
                   )),
